@@ -31,7 +31,7 @@ class ViewController: UIViewController {
             case .success(let forecast):
                 self.updateUI(forecast)
             case .failure(let error):
-                self.sendNotificationError(errorType: error.locali zedDescription)
+                self.sendNotificationError(errorType: error.localizedDescription)
             }
         }
     }
