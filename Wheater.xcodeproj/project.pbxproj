@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		41FBB4C9263DF6A285125A67 /* Pods_WheaterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0292F5741CBC4074F6863AB /* Pods_WheaterTests.framework */; };
 		542331D641280A6954F5AB0F /* Pods_Wheater.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40B24EDDB5D458FECE7CD6AB /* Pods_Wheater.framework */; };
+		CE0C6CC922D7C642008FA311 /* DaysListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0C6CC822D7C642008FA311 /* DaysListViewController.swift */; };
 		CE56143A22C3D7410058863C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE56143922C3D7410058863C /* AppDelegate.swift */; };
 		CE56143C22C3D7410058863C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE56143B22C3D7410058863C /* ViewController.swift */; };
 		CE56144122C3D7420058863C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE56144022C3D7420058863C /* Assets.xcassets */; };
@@ -38,6 +39,7 @@
 		6942963370D91522AFF2E52A /* Pods-WheaterTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WheaterTests.debug.xcconfig"; path = "Target Support Files/Pods-WheaterTests/Pods-WheaterTests.debug.xcconfig"; sourceTree = "<group>"; };
 		AEFCBFD72A67D4BAA84EDBE3 /* Pods-Wheater.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wheater.release.xcconfig"; path = "Target Support Files/Pods-Wheater/Pods-Wheater.release.xcconfig"; sourceTree = "<group>"; };
 		C0292F5741CBC4074F6863AB /* Pods_WheaterTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WheaterTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE0C6CC822D7C642008FA311 /* DaysListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaysListViewController.swift; sourceTree = "<group>"; };
 		CE56143622C3D7410058863C /* Wheater.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Wheater.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE56143922C3D7410058863C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE56143B22C3D7410058863C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 				CE56143922C3D7410058863C /* AppDelegate.swift */,
 				CE56143B22C3D7410058863C /* ViewController.swift */,
 				CE56146222CA4DCA0058863C /* ListTableViewController.swift */,
+				CE0C6CC822D7C642008FA311 /* DaysListViewController.swift */,
 				CE91B13E22CE7BFC00D055C1 /* Main.storyboard */,
 				CE56144022C3D7420058863C /* Assets.xcassets */,
 				CE56144222C3D7420058863C /* LaunchScreen.storyboard */,
@@ -314,6 +317,7 @@
 				CE56146322CA4DCA0058863C /* ListTableViewController.swift in Sources */,
 				CEBA507922D664FA002BB284 /* ForecastMultiDays.swift in Sources */,
 				CE56143A22C3D7410058863C /* AppDelegate.swift in Sources */,
+				CE0C6CC922D7C642008FA311 /* DaysListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

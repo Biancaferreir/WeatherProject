@@ -9,15 +9,21 @@
 import Foundation
 
 struct List: Codable {
-//    let dt: Int
-//    let message: Double
-//    let cnt: Int
+    let message: Double
+    let cnt: Int
     let list: [ListForecast]
 }
 
 struct ListForecast: Codable {
     let main: Main
     let weather: [Weather]
+    let data: String
+    
+    enum CodingKeys: String, CodingKey {
+        case main
+        case weather
+        case data = "dt_txt"
+    }
 }
 
 struct Forecast: Codable {
@@ -42,7 +48,7 @@ struct Main: Codable {
     let tempMin: Double
     let tempMax: Double
     let humidity: Int
-    let pressure: Int
+    let pressure: Double
     
     enum CodingKeys: String, CodingKey {
         case temp, humidity, pressure
