@@ -9,7 +9,9 @@
 import Foundation
 import Alamofire
 
-struct ForecastAPI {
+
+
+struct ForecastCurrentDay {
     
     static func getWeather(cityID: Int, completionHandler: @escaping (Swift.Result<Forecast, Error>) -> Void) {
         let apiKey = "f201c9049be6c17d992372ff163fd372"

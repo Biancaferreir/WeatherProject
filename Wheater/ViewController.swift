@@ -26,10 +26,20 @@ class ViewController: UIViewController {
     }
     
     private func getForecast(cityID: Int) {
-        ForecastAPI.getWeather(cityID: cityID) { result in
+        ForecastCurrentDay.getWeather(cityID: cityID) { result in
             switch result {
             case .success(let forecast):
                 self.updateUI(forecast)
+            case .failure(let error):
+                self.sendNotificationError(errorType: error.localizedDescription)
+            }
+        }
+        
+        //teste para ver se tem resultados dos multiplos dias
+        ForecastMultiDays.getWeatherDays(cityID: cityID) { result in
+            switch result {
+            case .success(let forecast):
+                print("success")
             case .failure(let error):
                 self.sendNotificationError(errorType: error.localizedDescription)
             }

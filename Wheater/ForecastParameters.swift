@@ -8,8 +8,20 @@
 
 import Foundation
 
+struct List: Codable {
+//    let dt: Int
+//    let message: Double
+//    let cnt: Int
+    let list: [ListForecast]
+}
+
+struct ListForecast: Codable {
+    let main: Main
+    let weather: [Weather]
+}
+
 struct Forecast: Codable {
-    let  weather: [Weather]
+    let weather: [Weather]
     let main: Main
     let cod: Int
     let id: Int
@@ -46,11 +58,9 @@ struct Weather: Codable {
     let id: Int
 }
 
-struct City {
-    
+struct City: Codable {
     let id: Int
     let name: String
-    
     
     static func defaultCities() -> [City] {
         return [
@@ -65,5 +75,4 @@ struct City {
             City(id: 2759794, name: "Amsterdam")
         ]
     }
-    
 }
