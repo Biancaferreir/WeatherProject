@@ -24,6 +24,13 @@ struct ListForecast: Codable {
         case weather
         case data = "dt_txt"
     }
+    
+    var imageURL: URL? {
+        if let weather = weather.first {
+            return URL(string: "https://openweathermap.org/img/wn/\(weather.icon)@2x.png")
+        }
+        return nil
+    }
 }
 
 struct Forecast: Codable {

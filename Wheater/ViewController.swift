@@ -11,6 +11,7 @@ import Alamofire
 
 class ViewController: UIViewController {
     
+    @IBOutlet var tableView: UITableView!
     @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet weak var tempMaxLabel: UILabel!
     @IBOutlet weak var tempMinLabel: UILabel!
@@ -19,10 +20,13 @@ class ViewController: UIViewController {
     @IBOutlet weak var descriptionLabel: UILabel!
     
     private let defaultCityId: Int = 3448439
+    private var arrazinho: [List] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         getForecast(cityID: defaultCityId)
+        tableView.dataSource = self
+        tableView.delegate = self
     }
     
     private func getForecast(cityID: Int) {
@@ -35,11 +39,11 @@ class ViewController: UIViewController {
             }
         }
         
-        //teste para ver se tem resultados dos multiplos dias
         ForecastMultiDays.getWeatherDays(cityID: cityID) { result in
             switch result {
             case .success(let forecast):
-                print("success")
+                self.arrazinho = [forecast]
+                self.tableView.reloadData()
             case .failure(let error):
                 self.sendNotificationError(errorType: error.localizedDescription)
             }
@@ -59,12 +63,12 @@ class ViewController: UIViewController {
             let data = try? Data(contentsOf: iconURL)
             if let imageData = data {
                 let icon = UIImage(data: imageData)
-                self.iconIMG.image = icon
+                iconIMG.image = icon
             }
         }
         activityIndicator.stopAnimating()
     }
-
+  
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
         if let listVC = segue.destination as? ListTableViewController{
@@ -72,19 +76,42 @@ class ViewController: UIViewController {
         }
     }
     
-    func sendNotificationError(errorType: String){
-        let errorNotification = UIAlertController(title: "Something Went Wrong", message: "Error: \(errorType) try again!", preferredStyle: .alert)
+    private func sendNotificationError(errorType: String){
+        let errorNotification = UIAlertController(
+            title: "Something Went Wrong",
+            message: "Error: \(errorType) try again!",
+            preferredStyle: .alert
+        )
         errorNotification.addAction(UIAlertAction(title: "Close", style: .cancel, handler: nil))
-        self.present(errorNotification, animated: true)
+        present(errorNotification, animated: true)
     }
 }
 
+extension ViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        //let days = self.arrazinho[indexPath.row]
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cellID", for: indexPath) as! WeatherDaysViewCell
+        
+        cell.title?.text = "teste"
+        return cell
+    }
+    
+}
+
+
+
 extension ViewController: ListTableViewControllerDelegate {
+    
     func listTableViewControllerFinished(viewControler: ListTableViewController, cityID: Int) {
         getForecast(cityID: cityID)
         activityIndicator.startAnimating()
         navigationController?.popToRootViewController(animated: true)
     }
 }
-
 

@@ -14,7 +14,6 @@ protocol ListTableViewControllerDelegate: class {
 }
 
 class ListTableViewController: UITableViewController {
-//    var cityID: ((Int) -> Void)? = nil
     
     let cities = City.defaultCities()
     weak var delegate: ListTableViewControllerDelegate?
@@ -41,7 +40,6 @@ class ListTableViewController: UITableViewController {
         let city = cities[indexPath.row]
         delegate?.listTableViewControllerFinished(viewControler: self, cityID: city.id)
     }
-
 
 }
 
