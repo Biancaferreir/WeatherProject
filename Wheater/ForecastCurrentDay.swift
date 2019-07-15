@@ -14,6 +14,7 @@ import Alamofire
 struct ForecastCurrentDay {
     
     static func getWeather(cityID: Int, completionHandler: @escaping (Swift.Result<Forecast, Error>) -> Void) {
+        
         let apiKey = "f201c9049be6c17d992372ff163fd372"
         let finalURL = "https://api.openweathermap.org/data/2.5/weather?id=\(cityID.description)&units=metric&appid=\(apiKey)"
         

@@ -20,13 +20,11 @@ class ViewController: UIViewController {
     @IBOutlet weak var descriptionLabel: UILabel!
     
     private let defaultCityId: Int = 3448439
-    private var arrazinho: [List] = []
+    private var arrazinho: [ListForecast] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         getForecast(cityID: defaultCityId)
-        tableView.dataSource = self
-        tableView.delegate = self
     }
     
     private func getForecast(cityID: Int) {
@@ -42,7 +40,7 @@ class ViewController: UIViewController {
         ForecastMultiDays.getWeatherDays(cityID: cityID) { result in
             switch result {
             case .success(let forecast):
-                self.arrazinho = [forecast]
+                self.arrazinho = forecast.list
                 self.tableView.reloadData()
             case .failure(let error):
                 self.sendNotificationError(errorType: error.localizedDescription)
@@ -59,13 +57,16 @@ class ViewController: UIViewController {
             descriptionLabel.text = weather.main
         }
         
-        if let iconURL = forecast.imageURL {
-            let data = try? Data(contentsOf: iconURL)
-            if let imageData = data {
-                let icon = UIImage(data: imageData)
-                iconIMG.image = icon
-            }
-        }
+        iconIMG.image = forecast.iconIMG
+        
+        setTableView(tableView)
+    }
+    
+    private func setTableView(_ tableView: UITableView){
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.isUserInteractionEnabled = false
+        tableView.reloadData()
         activityIndicator.stopAnimating()
     }
   
@@ -88,23 +89,28 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 53
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return arrazinho.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //let days = self.arrazinho[indexPath.row]
+        let days = self.arrazinho[indexPath.row]
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellID", for: indexPath) as! WeatherDaysViewCell
+        print(days.data)
         
-        cell.title?.text = "teste"
+        cell.tempMinLabel.text = "Max: \(days.main.tempMin.description)°C"
+        cell.tempMaxLabel.text = "Max: \(days.main.tempMax.description)°C"
+        cell.icon.image = days.iconIMG
+        
         return cell
     }
     
 }
-
-
 
 extension ViewController: ListTableViewControllerDelegate {
     

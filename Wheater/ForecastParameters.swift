@@ -7,9 +7,9 @@
 //
 
 import Foundation
+import UIKit
 
 struct List: Codable {
-    let message: Double
     let cnt: Int
     let list: [ListForecast]
 }
@@ -23,6 +23,12 @@ struct ListForecast: Codable {
         case main
         case weather
         case data = "dt_txt"
+    }
+    
+    var iconIMG: UIImage? {
+        let data = try? Data(contentsOf: imageURL!)
+        let icon = UIImage(data: data!)
+        return icon
     }
     
     var imageURL: URL? {
@@ -41,6 +47,12 @@ struct Forecast: Codable {
     let dt: Int
     let timezone: Int
     let name: String
+    
+    var iconIMG: UIImage? {
+        let data = try? Data(contentsOf: imageURL!)
+        let icon = UIImage(data: data!)
+            return icon
+    }
     
     var imageURL: URL? {
         if let weather = weather.first {
