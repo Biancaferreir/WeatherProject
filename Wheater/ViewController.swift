@@ -42,6 +42,7 @@ class ViewController: UIViewController {
             case .success(let forecast):
                 self.arrazinho = forecast.list
                 self.tableView.reloadData()
+                self.activityIndicator.stopAnimating()
             case .failure(let error):
                 self.sendNotificationError(errorType: error.localizedDescription)
             }
@@ -67,7 +68,6 @@ class ViewController: UIViewController {
         tableView.delegate = self
         tableView.isUserInteractionEnabled = false
         tableView.reloadData()
-        activityIndicator.stopAnimating()
     }
   
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -90,7 +90,7 @@ class ViewController: UIViewController {
 
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 53
+        return 54
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -100,20 +100,20 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let days = self.arrazinho[indexPath.row]
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cellID", for: indexPath) as! WeatherDaysViewCell
-        print(days.data)
+        let weekDays = Days.weekDays(days.data)
         
-        cell.tempMinLabel.text = "Max: \(days.main.tempMin.description)°C"
-        cell.tempMaxLabel.text = "Max: \(days.main.tempMax.description)°C"
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cellID", for: indexPath) as! WeatherDaysViewCell
+        
+        cell.weekDays.text = weekDays
+        cell.tempMinLabel.text = "\(days.main.tempMin.description)°C"
+        cell.tempMaxLabel.text = "\(days.main.tempMax.description)°C"
         cell.icon.image = days.iconIMG
         
         return cell
     }
-    
 }
 
 extension ViewController: ListTableViewControllerDelegate {
-    
     func listTableViewControllerFinished(viewControler: ListTableViewController, cityID: Int) {
         getForecast(cityID: cityID)
         activityIndicator.startAnimating()

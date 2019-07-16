@@ -11,7 +11,12 @@ import UIKit
 
 struct List: Codable {
     let cnt: Int
-    let list: [ListForecast]
+    var list: [ListForecast]
+    
+    init(cnt: Int = 0, list: [ListForecast] = []) {
+        self.cnt = cnt
+        self.list = list
+    }
 }
 
 struct ListForecast: Codable {
@@ -99,5 +104,16 @@ struct City: Codable {
             City(id: 3435910, name: "Buenos Aires"),
             City(id: 2759794, name: "Amsterdam")
         ]
+    }
+}
+
+struct Days: Codable {
+    
+    static func weekDays(_ currentDay: String) -> String{
+        let formater = DateFormatter()
+        formater.dateFormat = "yyyy-MM-dd hh:mm:ss"
+        let date = formater.date(from: currentDay)!
+        formater.dateFormat = "EEE"
+        return formater.string(from: date)
     }
 }

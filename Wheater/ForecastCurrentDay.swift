@@ -9,8 +9,6 @@
 import Foundation
 import Alamofire
 
-
-
 struct ForecastCurrentDay {
     
     static func getWeather(cityID: Int, completionHandler: @escaping (Swift.Result<Forecast, Error>) -> Void) {
