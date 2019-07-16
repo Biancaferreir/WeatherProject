@@ -9,28 +9,28 @@
 import Foundation
 import UIKit
 
-struct List: Codable {
+struct ListOfDays: Codable {
     let cnt: Int
-    var list: [ListForecast]
+    var list: [ForecastListOfDays]
     
-    init(cnt: Int = 0, list: [ListForecast] = []) {
+    init(cnt: Int = 0, list: [ForecastListOfDays] = []) {
         self.cnt = cnt
         self.list = list
     }
 }
 
-struct ListForecast: Codable {
+struct ForecastListOfDays: Codable {
     let main: Main
     let weather: [Weather]
-    let data: String
+    let date: String
     
     enum CodingKeys: String, CodingKey {
         case main
         case weather
-        case data = "dt_txt"
+        case date = "dt_txt"
     }
     
-    var iconIMG: UIImage? {
+    var icon: UIImage? {
         let data = try? Data(contentsOf: imageURL!)
         let icon = UIImage(data: data!)
         return icon
@@ -44,7 +44,7 @@ struct ListForecast: Codable {
     }
 }
 
-struct Forecast: Codable {
+struct ForecastOneDay: Codable {
     let weather: [Weather]
     let main: Main
     let cod: Int
@@ -53,7 +53,7 @@ struct Forecast: Codable {
     let timezone: Int
     let name: String
     
-    var iconIMG: UIImage? {
+    var icon: UIImage? {
         let data = try? Data(contentsOf: imageURL!)
         let icon = UIImage(data: data!)
             return icon
@@ -108,8 +108,7 @@ struct City: Codable {
 }
 
 struct Days: Codable {
-    
-    static func weekDays(_ currentDay: String) -> String{
+    static func getDaysName(_ currentDay: String) -> String{
         let formater = DateFormatter()
         formater.dateFormat = "yyyy-MM-dd hh:mm:ss"
         let date = formater.date(from: currentDay)!

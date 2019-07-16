@@ -9,14 +9,14 @@
 import Foundation
 import UIKit
 
-protocol ListTableViewControllerDelegate: class {
-    func listTableViewControllerFinished(viewControler: ListTableViewController, cityID: Int)
+protocol CitiesListTableViewControllerDelegate: class {
+    func isCitiesListFinished(viewControler: CitiesListTableViewController, cityID: Int)
 }
 
-class ListTableViewController: UITableViewController {
+class CitiesListTableViewController: UITableViewController {
     
     let cities = City.defaultCities()
-    weak var delegate: ListTableViewControllerDelegate?
+    weak var delegate: CitiesListTableViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +38,7 @@ class ListTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let city = cities[indexPath.row]
-        delegate?.listTableViewControllerFinished(viewControler: self, cityID: city.id)
+        delegate?.isCitiesListFinished(viewControler: self, cityID: city.id)
     }
 
 }

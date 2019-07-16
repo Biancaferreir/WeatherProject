@@ -12,15 +12,15 @@ import Alamofire
 class ViewController: UIViewController {
     
     @IBOutlet var tableView: UITableView!
-    @IBOutlet weak var tempLabel: UILabel!
-    @IBOutlet weak var tempMaxLabel: UILabel!
-    @IBOutlet weak var tempMinLabel: UILabel!
-    @IBOutlet weak var iconIMG: UIImageView!
+    @IBOutlet weak var currentTemperatureLabel: UILabel!
+    @IBOutlet weak var maximusTemperatureLabel: UILabel!
+    @IBOutlet weak var minimumTemperatureLabel: UILabel!
+    @IBOutlet weak var weatherIconImageView: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var weatherDescriptionLabel: UILabel!
     
     private let defaultCityId: Int = 3448439
-    private var arrazinho: [ListForecast] = []
+    private var fiveDaysWeatherArray: [ForecastListOfDays] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,37 +28,37 @@ class ViewController: UIViewController {
     }
     
     private func getForecast(cityID: Int) {
-        ForecastCurrentDay.getWeather(cityID: cityID) { result in
+        NetworkHandler.forecastForOneDay(cityID: cityID) { result in
             switch result {
             case .success(let forecast):
                 self.updateUI(forecast)
             case .failure(let error):
-                self.sendNotificationError(errorType: error.localizedDescription)
+                self.sendErrorNotification(error.localizedDescription)
             }
         }
         
-        ForecastMultiDays.getWeatherDays(cityID: cityID) { result in
+        NetworkHandler.forecastForFiveDays(cityID: cityID) { result in
             switch result {
             case .success(let forecast):
-                self.arrazinho = forecast.list
+                self.fiveDaysWeatherArray = forecast.list          
                 self.tableView.reloadData()
                 self.activityIndicator.stopAnimating()
             case .failure(let error):
-                self.sendNotificationError(errorType: error.localizedDescription)
+                self.sendErrorNotification(error.localizedDescription)
             }
         }
     }
     
-    private func updateUI(_ forecast: Forecast) {
+    private func updateUI(_ forecast: ForecastOneDay) {
         navigationItem.title = forecast.name
-        tempLabel.text = "\(forecast.main.temp.description)°C"
-        tempMinLabel.text = "Min: \(forecast.main.tempMin.description)°C"
-        tempMaxLabel.text = "Max: \(forecast.main.tempMax.description)°C"
+        currentTemperatureLabel.text = "\(forecast.main.temp.description)°C"
+        minimumTemperatureLabel.text = "Min: \(forecast.main.tempMin.description)°C"
+        maximusTemperatureLabel.text = "Max: \(forecast.main.tempMax.description)°C"
         if let weather = forecast.weather.first{
-            descriptionLabel.text = weather.main
+            weatherDescriptionLabel.text = weather.main
         }
         
-        iconIMG.image = forecast.iconIMG
+        weatherIconImageView.image = forecast.icon
         
         setTableView(tableView)
     }
@@ -72,12 +72,12 @@ class ViewController: UIViewController {
   
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
-        if let listVC = segue.destination as? ListTableViewController{
-            listVC.delegate = self
+        if let citiesListVC = segue.destination as? CitiesListTableViewController{
+            citiesListVC.delegate = self
         }
     }
     
-    private func sendNotificationError(errorType: String){
+    private func sendErrorNotification(_ errorType: String){
         let errorNotification = UIAlertController(
             title: "Something Went Wrong",
             message: "Error: \(errorType) try again!",
@@ -94,27 +94,27 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return arrazinho.count
+        return fiveDaysWeatherArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let days = self.arrazinho[indexPath.row]
+        let listOfDays = self.fiveDaysWeatherArray[indexPath.row]
         
-        let weekDays = Days.weekDays(days.data)
+        let weekDaysNames = Days.getDaysName(listOfDays.date)
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellID", for: indexPath) as! WeatherDaysViewCell
         
-        cell.weekDays.text = weekDays
-        cell.tempMinLabel.text = "\(days.main.tempMin.description)°C"
-        cell.tempMaxLabel.text = "\(days.main.tempMax.description)°C"
-        cell.icon.image = days.iconIMG
+        cell.weekDaysNames.text = weekDaysNames
+        cell.tempMinLabel.text = "\(listOfDays.main.tempMin.description)°C"
+        cell.tempMaxLabel.text = "\(listOfDays.main.tempMax.description)°C"
+        cell.icon.image = listOfDays.icon
         
         return cell
     }
 }
 
-extension ViewController: ListTableViewControllerDelegate {
-    func listTableViewControllerFinished(viewControler: ListTableViewController, cityID: Int) {
+extension ViewController: CitiesListTableViewControllerDelegate {
+    func isCitiesListFinished(viewControler: CitiesListTableViewController, cityID: Int) {
         getForecast(cityID: cityID)
         activityIndicator.startAnimating()
         navigationController?.popToRootViewController(animated: true)

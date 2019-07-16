@@ -15,11 +15,10 @@
 		CE56144122C3D7420058863C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE56144022C3D7420058863C /* Assets.xcassets */; };
 		CE56144422C3D7420058863C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE56144222C3D7420058863C /* LaunchScreen.storyboard */; };
 		CE56144F22C3D7420058863C /* WheaterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE56144E22C3D7420058863C /* WheaterTests.swift */; };
-		CE56145F22C675370058863C /* ForecastCurrentDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE56145E22C675370058863C /* ForecastCurrentDay.swift */; };
+		CE56145F22C675370058863C /* NetworkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE56145E22C675370058863C /* NetworkHandler.swift */; };
 		CE56146122C67E960058863C /* ForecastParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE56146022C67E960058863C /* ForecastParameters.swift */; };
-		CE56146322CA4DCA0058863C /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE56146222CA4DCA0058863C /* ListTableViewController.swift */; };
+		CE56146322CA4DCA0058863C /* CitiesListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE56146222CA4DCA0058863C /* CitiesListTableViewController.swift */; };
 		CE91B13F22CE7BFC00D055C1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE91B13E22CE7BFC00D055C1 /* Main.storyboard */; };
-		CEBA507922D664FA002BB284 /* ForecastMultiDays.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBA507822D664FA002BB284 /* ForecastMultiDays.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,11 +48,10 @@
 		CE56144A22C3D7420058863C /* WheaterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WheaterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE56144E22C3D7420058863C /* WheaterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheaterTests.swift; sourceTree = "<group>"; };
 		CE56145022C3D7420058863C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CE56145E22C675370058863C /* ForecastCurrentDay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForecastCurrentDay.swift; sourceTree = "<group>"; };
+		CE56145E22C675370058863C /* NetworkHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkHandler.swift; sourceTree = "<group>"; };
 		CE56146022C67E960058863C /* ForecastParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastParameters.swift; sourceTree = "<group>"; };
-		CE56146222CA4DCA0058863C /* ListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
+		CE56146222CA4DCA0058863C /* CitiesListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesListTableViewController.swift; sourceTree = "<group>"; };
 		CE91B13E22CE7BFC00D055C1 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		CEBA507822D664FA002BB284 /* ForecastMultiDays.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastMultiDays.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,17 +108,16 @@
 		CE56143822C3D7410058863C /* Wheater */ = {
 			isa = PBXGroup;
 			children = (
-				CE56145E22C675370058863C /* ForecastCurrentDay.swift */,
-				CEBA507822D664FA002BB284 /* ForecastMultiDays.swift */,
+				CE56145E22C675370058863C /* NetworkHandler.swift */,
 				CE56146022C67E960058863C /* ForecastParameters.swift */,
-				CE56143922C3D7410058863C /* AppDelegate.swift */,
 				CE56143B22C3D7410058863C /* ViewController.swift */,
-				CE56146222CA4DCA0058863C /* ListTableViewController.swift */,
+				CE56146222CA4DCA0058863C /* CitiesListTableViewController.swift */,
+				CE0C6CCA22D9186D008FA311 /* WeatherDaysViewCell.swift */,
+				CE56143922C3D7410058863C /* AppDelegate.swift */,
 				CE91B13E22CE7BFC00D055C1 /* Main.storyboard */,
 				CE56144022C3D7420058863C /* Assets.xcassets */,
 				CE56144222C3D7420058863C /* LaunchScreen.storyboard */,
 				CE56144522C3D7420058863C /* Info.plist */,
-				CE0C6CCA22D9186D008FA311 /* WeatherDaysViewCell.swift */,
 			);
 			path = Wheater;
 			sourceTree = "<group>";
@@ -312,10 +309,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE56143C22C3D7410058863C /* ViewController.swift in Sources */,
-				CE56145F22C675370058863C /* ForecastCurrentDay.swift in Sources */,
+				CE56145F22C675370058863C /* NetworkHandler.swift in Sources */,
 				CE56146122C67E960058863C /* ForecastParameters.swift in Sources */,
-				CE56146322CA4DCA0058863C /* ListTableViewController.swift in Sources */,
-				CEBA507922D664FA002BB284 /* ForecastMultiDays.swift in Sources */,
+				CE56146322CA4DCA0058863C /* CitiesListTableViewController.swift in Sources */,
 				CE0C6CCB22D9186D008FA311 /* WeatherDaysViewCell.swift in Sources */,
 				CE56143A22C3D7410058863C /* AppDelegate.swift in Sources */,
 			);

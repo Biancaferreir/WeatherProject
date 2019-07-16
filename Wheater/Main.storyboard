@@ -68,7 +68,7 @@
                                             <outlet property="icon" destination="GOY-5X-3Z9" id="IV3-9J-Ot6"/>
                                             <outlet property="tempMaxLabel" destination="YtU-Lz-m4a" id="xVf-fm-1Wa"/>
                                             <outlet property="tempMinLabel" destination="51b-7X-nmE" id="NhJ-t3-cof"/>
-                                            <outlet property="weekDays" destination="CxI-ke-Ztt" id="pE5-yO-aAK"/>
+                                            <outlet property="weekDaysNames" destination="CxI-ke-Ztt" id="pE5-yO-aAK"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -142,22 +142,22 @@
                     </navigationItem>
                     <connections>
                         <outlet property="activityIndicator" destination="5Dr-hX-tW7" id="kin-Wl-hf2"/>
-                        <outlet property="descriptionLabel" destination="iBR-oh-ehq" id="vRl-dj-HQl"/>
-                        <outlet property="iconIMG" destination="bLH-Qh-MDa" id="a72-g7-dAv"/>
+                        <outlet property="currentTemperatureLabel" destination="7Yf-9x-3gn" id="SIj-PU-Ffl"/>
+                        <outlet property="maximusTemperatureLabel" destination="2PL-4L-TYg" id="YLe-OX-W15"/>
+                        <outlet property="minimumTemperatureLabel" destination="gzp-Qw-hVe" id="FPH-tG-1iY"/>
                         <outlet property="tableView" destination="JnY-aR-XML" id="4J5-oh-FnF"/>
-                        <outlet property="tempLabel" destination="7Yf-9x-3gn" id="SIj-PU-Ffl"/>
-                        <outlet property="tempMaxLabel" destination="2PL-4L-TYg" id="YLe-OX-W15"/>
-                        <outlet property="tempMinLabel" destination="gzp-Qw-hVe" id="FPH-tG-1iY"/>
+                        <outlet property="weatherDescriptionLabel" destination="iBR-oh-ehq" id="vRl-dj-HQl"/>
+                        <outlet property="weatherIconImageView" destination="bLH-Qh-MDa" id="a72-g7-dAv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bY9-2d-5cA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1197.1014492753625" y="157.36607142857142"/>
         </scene>
-        <!--List Table View Controller-->
+        <!--Cities List Table View Controller-->
         <scene sceneID="C60-Zl-5T5">
             <objects>
-                <tableViewController id="qtu-rj-vO5" customClass="ListTableViewController" customModule="Wheater" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="qtu-rj-vO5" customClass="CitiesListTableViewController" customModule="Wheater" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="DQo-5N-FBc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
