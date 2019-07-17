@@ -9,21 +9,17 @@
 import Foundation
 import Alamofire
 
-private let apiKey = "&appid=f201c9049be6c17d992372ff163fd372"
-private let oneDayURL = "https://api.openweathermap.org/data/2.5/weather?id="
-private let fiveDaysURL = "https://api.openweathermap.org/data/2.5/forecast?id="
-private let apiMetrics = "&units=metric"
-
-struct NetworkHandler {
+struct OpenWeatherAPI {
     
-    static func forecastForOneDay(cityID: Int, completionHandler: @escaping (Swift.Result<ForecastOneDay, Error>) -> Void) {
+    private init() { }
+    
+    static func weather(cityID: Int, completionHandler: @escaping (Swift.Result<ForecastWeather, Error>) -> Void) {
         
-        let finalURL = "\(oneDayURL)\(cityID.description)\(apiMetrics)\(apiKey)"
-        
+        let finalURL = "\(APIConstants.baseURL)/weather?id=\(cityID.description)&units=\(APIConstants.apiMetrics)&appid=\(APIConstants.apiKey)"
         Alamofire.request(finalURL).responseJSON(completionHandler: { response in
             
             do {
-                let apiResponse = try JSONDecoder().decode(ForecastOneDay.self, from: response.data!)
+                let apiResponse = try JSONDecoder().decode(ForecastWeather.self, from: response.data!)
                 completionHandler(.success(apiResponse))
             } catch {
                 completionHandler(.failure(error))
@@ -31,15 +27,15 @@ struct NetworkHandler {
         })
     }
     
-    static func forecastForFiveDays(cityID: Int, completionHandler: @escaping (Swift.Result<ListOfDays, Error>) -> Void) {
+    static func forecast(cityID: Int, completionHandler: @escaping (Swift.Result<ForecastResponse, Error>) -> Void) {
         
-        let finalURL = "\(fiveDaysURL)\(cityID.description)\(apiMetrics)\(apiKey)"
-            
+        let finalURL = "\(APIConstants.baseURL)/forecast?id=\(cityID.description)&units=\(APIConstants.apiMetrics)&appid=\(APIConstants.apiKey)"
+        
         Alamofire.request(finalURL).responseJSON(completionHandler: { response in
             do {
-                let apiResponse = try JSONDecoder().decode(ListOfDays.self, from: response.data!)
+                let apiResponse = try JSONDecoder().decode(ForecastResponse.self, from: response.data!)
                 
-                var result = ListOfDays()
+                var result = ForecastResponse()
                 
                 var dates: [String] = []
                 let formatter = DateFormatter()
@@ -47,18 +43,19 @@ struct NetworkHandler {
                 let calendar = Calendar.current
                 
                 for item in apiResponse.list {
+                    
                     if let date = formatter.date(from: item.date) {
                         let day = calendar.component(.day, from: date)
                         let month = calendar.component(.month, from: date)
                         let year = calendar.component(.year, from: date)
                         
-                        //arrumar para conseguir a tempMax e Min do dia
+                        // TODO: arrumar para conseguir a tempMax e Min do dia
                         let id = "\(day)\(month)\(year)"
                         if !dates.contains(id) {
                             result.list.append(item)
                             dates.append(id)
                         } else {
-                            //lidar com isso
+                            // FIX-ME: lidar com isso
                         }
                     }
                 }
@@ -68,8 +65,6 @@ struct NetworkHandler {
             }
         })
     }
-
+    
 }
-    
-    
 

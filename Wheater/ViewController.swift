@@ -20,7 +20,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var weatherDescriptionLabel: UILabel!
     
     private let defaultCityId: Int = 3448439
-    private var fiveDaysWeatherArray: [ForecastListOfDays] = []
+    private var forecastItemArray: [ForecastItem] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,28 +28,27 @@ class ViewController: UIViewController {
     }
     
     private func getForecast(cityID: Int) {
-        NetworkHandler.forecastForOneDay(cityID: cityID) { result in
+        OpenWeatherAPI.weather(cityID: cityID) { result in
             switch result {
-            case .success(let forecast):
-                self.updateUI(forecast)
-            case .failure(let error):
-                self.sendErrorNotification(error.localizedDescription)
-            }
-        }
-        
-        NetworkHandler.forecastForFiveDays(cityID: cityID) { result in
-            switch result {
-            case .success(let forecast):
-                self.fiveDaysWeatherArray = forecast.list          
-                self.tableView.reloadData()
-                self.activityIndicator.stopAnimating()
+            case .success(let forecastWeather):
+                OpenWeatherAPI.forecast(cityID: cityID, completionHandler: { result in
+                    switch result {
+                    case .success(let forecast):
+                        self.forecastItemArray = forecast.list
+                        self.updateUI(forecastWeather)
+                        self.tableView.reloadData()
+                        self.activityIndicator.stopAnimating()
+                    case .failure(let error):
+                        self.sendErrorNotification(error.localizedDescription)
+                    }
+                })
             case .failure(let error):
                 self.sendErrorNotification(error.localizedDescription)
             }
         }
     }
     
-    private func updateUI(_ forecast: ForecastOneDay) {
+    private func updateUI(_ forecast: ForecastWeather) {
         navigationItem.title = forecast.name
         currentTemperatureLabel.text = "\(forecast.main.temp.description)°C"
         minimumTemperatureLabel.text = "Min: \(forecast.main.tempMin.description)°C"
@@ -94,20 +93,20 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return fiveDaysWeatherArray.count
+        return forecastItemArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let listOfDays = self.fiveDaysWeatherArray[indexPath.row]
+        let item = self.forecastItemArray[indexPath.row]
         
-        let weekDaysNames = Days.getDaysName(listOfDays.date)
+        let weekDaysNames = Days.getDaysName(sinceDate: item.date)
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cellID", for: indexPath) as! WeatherDaysViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cellID", for: indexPath) as! ForecastResponseViewCell
         
         cell.weekDaysNames.text = weekDaysNames
-        cell.tempMinLabel.text = "\(listOfDays.main.tempMin.description)°C"
-        cell.tempMaxLabel.text = "\(listOfDays.main.tempMax.description)°C"
-        cell.icon.image = listOfDays.icon
+        cell.tempMinLabel.text = "\(item.main.tempMin.description)°C"
+        cell.tempMaxLabel.text = "\(item.main.tempMax.description)°C"
+        cell.icon.image = item.icon
         
         return cell
     }
